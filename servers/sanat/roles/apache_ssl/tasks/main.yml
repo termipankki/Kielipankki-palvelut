@@ -6,6 +6,6 @@
     state: present
 
 - name: Create self-signed SSL certificate
-  command: openssl req -new -nodes -x509 -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN={{ item }}" -days 365 -keyout /etc/pki/tls/private/{{ item }}.key -out /etc/pki/tls/certs/{{ item }}.crt -extensions v3_ca creates=/etc/pki/tls/private/{{ item }}.key
+  command: openssl req -new -nodes -x509 -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN={{ item }}" -days 365 -keyout {{ apache_ssl_certificate_path }}/private/{{ item }}.key -out {{ apache_ssl_certificate_path }}/certs/{{ item }}.crt -extensions v3_ca creates={{ apache_ssl_certificate_path }}/private/{{ item }}.key
   notify: restart apache
   with_items: "{{ wiki_instances }}"
